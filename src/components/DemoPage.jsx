@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { BROKER_CAPACITY, getBrokerLeadCount, getBrokerStatus, recomputeBrokerCounts } from "../assignment.js";
 import { INITIAL_BROKERS } from "../data.js";
-import { routeHref } from "../routing.js";
 import { storage } from "../storage.js";
 import ThemeToggle from "./ThemeToggle.jsx";
 
@@ -31,13 +31,13 @@ export default function DemoPage() {
   return (
     <main className="demo-page">
       <header className="topbar">
-        <a className="lms-wordmark" href={routeHref("/")} aria-label="LMS home">
+        <Link className="lms-wordmark" to="/" aria-label="LMS home">
           <strong>LMS</strong>
           <span>Lead Management System</span>
-        </a>
+        </Link>
         <div className="topbar-links">
-          <a className="nav-link" href={routeHref("/login")}>Manager</a>
-          <a className="nav-link" href={routeHref("/")}>Overview</a>
+          <Link className="nav-link" to="/manager-login">Manager</Link>
+          <Link className="nav-link" to="/">Overview</Link>
           <ThemeToggle />
         </div>
       </header>

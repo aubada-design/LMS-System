@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/guardians-lux-logo.png";
-import { navigateToRoute, routeHref } from "../routing.js";
 import ThemeToggle from "./ThemeToggle.jsx";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -14,7 +15,7 @@ export default function LoginPage() {
     // Authentication or Supabase Auth before using this in production.
     if (password === "admin123") {
       sessionStorage.setItem("manager_logged_in", "true");
-      navigateToRoute("/manager/dashboard");
+      navigate("/manager/dashboard");
       return;
     }
 
@@ -24,9 +25,9 @@ export default function LoginPage() {
   return (
     <main className="login-page">
       <section className="login-panel panel">
-        <a className="agency-logo login-agency-logo" href={routeHref("/")} aria-label="Back to LMS landing page">
+        <Link className="agency-logo login-agency-logo" to="/" aria-label="Back to LMS landing page">
           <img src={logo} alt="Guardians Lux" />
-        </a>
+        </Link>
         <div>
           <span className="eyebrow">Manager login</span>
           <h1>Sign in</h1>

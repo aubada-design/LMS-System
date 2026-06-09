@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { INITIAL_BROKERS, LANGUAGES, LEAD_STATUSES, PROPERTY_TYPES } from "../data.js";
 import { formatTime } from "../managerUtils.js";
-import { routeHref } from "../routing.js";
 import { storage } from "../storage.js";
 import LeadDetailsModal from "./LeadDetailsModal.jsx";
 import PublicHeader from "./PublicHeader.jsx";
@@ -60,7 +60,7 @@ export default function LeadStatusPage() {
           <span className="eyebrow">Public lead access</span>
           <h1>Lead Status</h1>
         </div>
-        <a className="button subtle back-button" href={routeHref("/")}>Back to LMS</a>
+        <Link className="button subtle back-button" to="/">Back to LMS</Link>
       </section>
 
       <section className="toolbar-card public-toolbar">

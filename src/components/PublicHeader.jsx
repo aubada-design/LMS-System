@@ -1,15 +1,15 @@
+import { Link } from "react-router-dom";
 import logo from "../assets/guardians-lux-logo.png";
-import { routeHref } from "../routing.js";
 import ThemeToggle from "./ThemeToggle.jsx";
 
 export default function PublicHeader() {
   return (
     <header className="public-header">
-      <a className="agency-logo" href={routeHref("/")} aria-label="Guardians Lux home">
+      <Link className="agency-logo" to="/" aria-label="Guardians Lux home">
         <img src={logo} alt="Guardians Lux" />
-      </a>
+      </Link>
       <nav className="public-actions" aria-label="Public navigation">
-        <a className="button primary" href={routeHref("/login")}>Manager Login</a>
+        <Link className="button primary" to="/manager-login">Manager Login</Link>
         <ThemeToggle />
       </nav>
     </header>

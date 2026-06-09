@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   BROKER_CAPACITY,
   getBrokerClosedDeals,
@@ -10,7 +11,6 @@ import {
 import { getBrokerAvatar, getBrokerAvatarStyle } from "../brokerAvatars.js";
 import { AREAS, INITIAL_BROKERS, LANGUAGES, PROPERTY_TYPES } from "../data.js";
 import { emptyBrokerFilters, filterBrokers } from "../managerUtils.js";
-import { routeHref } from "../routing.js";
 import { storage } from "../storage.js";
 import ManagerLayout from "./ManagerLayout.jsx";
 
@@ -235,7 +235,7 @@ export default function ManagerBrokersPage() {
             <span className="section-label">Directory</span>
             <h2>{visibleBrokers.length} brokers shown</h2>
           </div>
-          <a className="button subtle" href={routeHref("/manager/leads")}>Open leads</a>
+          <Link className="button subtle" to="/manager/leads">Open leads</Link>
         </div>
 
         {visibleBrokers.length === 0 ? (
@@ -296,7 +296,7 @@ export default function ManagerBrokersPage() {
                   </div>
 
                   <div className="card-actions">
-                    <a className="button subtle" href={routeHref(`/manager/leads?broker=${encodeURIComponent(broker.name)}`)}>View</a>
+                    <Link className="button subtle" to={`/manager/leads?broker=${encodeURIComponent(broker.name)}`}>View</Link>
                     <button className="button subtle" type="button" onClick={() => editBroker(broker)}>Edit</button>
                     <button className="button subtle" type="button" onClick={() => toggleAvailability(broker.id)}>
                       {broker.availability === "Busy" ? "Set Available" : "Set Busy"}

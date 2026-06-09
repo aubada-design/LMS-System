@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import BrokerStatusPage from "./components/BrokerStatusPage.jsx";
 import LandingPage from "./components/LandingPage.jsx";
 import LoginPage from "./components/LoginPage.jsx";
@@ -8,45 +9,82 @@ import ManagerBrokersPage from "./components/ManagerBrokersPage.jsx";
 import ManagerDashboardPage from "./components/ManagerDashboardPage.jsx";
 import ManagerLeadsPage from "./components/ManagerLeadsPage.jsx";
 import SettingsPage from "./components/SettingsPage.jsx";
-import { getCurrentRoute, navigateToRoute } from "./routing.js";
+
+function RequireManager({ children }) {
+  const [isLoggedIn] = useState(() => sessionStorage.getItem("manager_logged_in") === "true");
+
+  if (!isLoggedIn) {
+    return <Navigate to="/manager-login" replace />;
+  }
+
+  return children;
+}
 
 export default function App() {
-  const [route, setRoute] = useState(getCurrentRoute());
-
   useEffect(() => {
     const storedTheme = localStorage.getItem("lms:theme") || "light";
     document.documentElement.dataset.theme = storedTheme;
   }, []);
 
-  useEffect(() => {
-    const handleLocationChange = () => setRoute(getCurrentRoute());
-
-    window.addEventListener("popstate", handleLocationChange);
-    window.addEventListener("hashchange", handleLocationChange);
-    return () => {
-      window.removeEventListener("popstate", handleLocationChange);
-      window.removeEventListener("hashchange", handleLocationChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    const isManagerRoute = route.startsWith("/manager");
-    const isLoggedIn = sessionStorage.getItem("manager_logged_in") === "true";
-
-    if (isManagerRoute && !isLoggedIn) {
-      navigateToRoute("/login");
-      setRoute("/login");
-    }
-  }, [route]);
-
-  if (route === "/login") return <LoginPage />;
-  if (route === "/demo" || route === "/broker-status" || route === "/brokers") return <BrokerStatusPage />;
-  if (route === "/lead-status" || route === "/leads") return <LeadStatusPage />;
-  if (route === "/manager" || route === "/manager/dashboard") return <ManagerDashboardPage />;
-  if (route === "/manager/brokers") return <ManagerBrokersPage />;
-  if (route === "/manager/leads") return <ManagerLeadsPage />;
-  if (route === "/manager/activity") return <ActivityLogPage />;
-  if (route === "/manager/settings") return <SettingsPage />;
-
-  return <LandingPage />;
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/brokers" element={<BrokerStatusPage />} />
+      <Route path="/broker-status" element={<Navigate to="/brokers" replace />} />
+      <Route path="/demo" element={<Navigate to="/brokers" replace />} />
+      <Route path="/leads" element={<LeadStatusPage />} />
+      <Route path="/lead-status" element={<Navigate to="/leads" replace />} />
+      <Route path="/manager-login" element={<LoginPage />} />
+      <Route path="/login" element={<Navigate to="/manager-login" replace />} />
+      <Route
+        path="/manager"
+        element={(
+          <RequireManager>
+            <ManagerDashboardPage />
+          </RequireManager>
+        )}
+      />
+      <Route
+        path="/manager/dashboard"
+        element={(
+          <RequireManager>
+            <ManagerDashboardPage />
+          </RequireManager>
+        )}
+      />
+      <Route
+        path="/manager/brokers"
+        element={(
+          <RequireManager>
+            <ManagerBrokersPage />
+          </RequireManager>
+        )}
+      />
+      <Route
+        path="/manager/leads"
+        element={(
+          <RequireManager>
+            <ManagerLeadsPage />
+          </RequireManager>
+        )}
+      />
+      <Route
+        path="/manager/activity"
+        element={(
+          <RequireManager>
+            <ActivityLogPage />
+          </RequireManager>
+        )}
+      />
+      <Route
+        path="/manager/settings"
+        element={(
+          <RequireManager>
+            <SettingsPage />
+          </RequireManager>
+        )}
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
 }

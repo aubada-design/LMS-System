@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { BROKER_CAPACITY, getBrokerLeadCount, getBrokerStatus, recomputeBrokerCounts } from "../assignment.js";
 import { getBrokerAvatar, getBrokerAvatarStyle } from "../brokerAvatars.js";
 import { INITIAL_BROKERS } from "../data.js";
-import { routeHref } from "../routing.js";
 import { storage } from "../storage.js";
 import LeadDetailsModal from "./LeadDetailsModal.jsx";
 import PublicHeader from "./PublicHeader.jsx";
@@ -41,7 +41,7 @@ export default function BrokerStatusPage() {
           <span className="eyebrow">Public broker access</span>
           <h1>Broker Status</h1>
         </div>
-        <a className="button subtle back-button" href={routeHref("/")}>Back to LMS</a>
+        <Link className="button subtle back-button" to="/">Back to LMS</Link>
       </section>
 
       <label className="portal-search">
