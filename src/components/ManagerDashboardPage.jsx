@@ -6,6 +6,7 @@ import {
   recomputeBrokerCounts,
 } from "../assignment.js";
 import { INITIAL_BROKERS, LANGUAGES, LEAD_SOURCES, LEAD_STATUSES } from "../data.js";
+import { routeHref } from "../routing.js";
 import { storage } from "../storage.js";
 import { BarChart, DonutChart, LineChart } from "./Charts.jsx";
 import ManagerLayout from "./ManagerLayout.jsx";
@@ -104,8 +105,8 @@ export default function ManagerDashboardPage() {
       </section>
 
       <aside className="quick-action-panel" aria-label="Quick actions">
-        <a className="button primary" href="/manager/leads">Assign Lead</a>
-        <a className="button subtle" href="/manager/brokers">Add Broker</a>
+        <a className="button primary" href={routeHref("/manager/leads")}>Assign Lead</a>
+        <a className="button subtle" href={routeHref("/manager/brokers")}>Add Broker</a>
       </aside>
     </ManagerLayout>
   );

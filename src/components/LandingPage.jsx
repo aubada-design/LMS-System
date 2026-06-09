@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { getBrokerStatus, recomputeBrokerCounts } from "../assignment.js";
 import { INITIAL_BROKERS } from "../data.js";
+import { routeHref } from "../routing.js";
 import { storage } from "../storage.js";
 import PublicHeader from "./PublicHeader.jsx";
 
@@ -47,7 +48,7 @@ export default function LandingPage() {
             <div><dt>Busy Brokers</dt><dd>{brokerStats.busy}</dd></div>
             <div><dt>Full Brokers</dt><dd>{brokerStats.full}</dd></div>
           </dl>
-          <a className="button primary" href="/broker-status">View Broker Status</a>
+          <a className="button primary" href={routeHref("/brokers")}>View Broker Status</a>
         </article>
 
         <article className="public-action-card">
@@ -61,7 +62,7 @@ export default function LandingPage() {
             <div><dt>Active Leads</dt><dd>{leadStats.active}</dd></div>
             <div><dt>Closed Leads</dt><dd>{leadStats.closed}</dd></div>
           </dl>
-          <a className="button subtle" href="/lead-status">View Lead Status</a>
+          <a className="button subtle" href={routeHref("/leads")}>View Lead Status</a>
         </article>
       </section>
     </main>
